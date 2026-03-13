@@ -1,0 +1,30 @@
+{
+  "name": "smart-money-option-chain-tracker",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "bot:start": "tsx src/bot/index.ts",
+    "bot:dev": "tsx watch src/bot/index.ts",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "dotenv": "^16.6.1",
+    "next": "^15.5.12",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "telegraf": "^4.16.3"
+  },
+  "devDependencies": {
+    "@types/node": "22.13.10",
+    "@types/react": "19.0.10",
+    "@types/react-dom": "19.0.4",
+    "eslint": "^10.0.1",
+    "eslint-config-next": "^0.2.4",
+    "tsx": "^4.20.4",
+    "typescript": "5.8.2"
+  }
+}
