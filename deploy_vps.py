@@ -126,7 +126,7 @@ function buildSessionContext(index: string, strike: number | undefined, payload:
         `CE-INT:${ceInt} CE-POS:${cePos} ΔCE-OI:${ceDoi} | ` +
         `PE-INT:${peInt} PE-POS:${pePos} ΔPE-OI:${peDoi} | ` +
         `Signal: ${r.signal.kind.replaceAll("_", " ")} (${r.signal.confidence.toFixed(0)}%) | ` +
-        `Chartians: ${r.chartians.verdict}`
+        `Radar: ${r.market.verdict}`
       );
     }
     lines.push("");
@@ -228,7 +228,7 @@ Key terms:
 - COI (Change in Open Interest): rising = new positions building, falling = closing
 - C-INT / P-INT: intraday COI/Volume ratio — high = institutional conviction
 - C-POS / P-POS: positional ratio — >1 = multi-day smart money positioning
-- Chartians Verdict: Exchange of Hands / High Conviction Writing / Panic Covering
+- Radar Verdict: Exchange of Hands / High Conviction Writing / Panic Covering
 - Market Tone: BULLISH / BEARISH / MIXED based on dominant signal distribution
 
 Answer in clear, direct language. Be specific about times and values from the data. Avoid jargon unless explaining it. Keep answers concise (3-6 sentences) unless the question requires depth.
@@ -618,7 +618,7 @@ function exportToCsv(rows: SnapshotRow[], strike: number) {
     "Time","Strike","Spot",
     "CE OI","CE OI-ROC","CE Volume","CE Vol-ROC","CE IV","CE IV-ROC","CE LTP","CE Positional","CE Intraday","CE Reading",
     "PE OI","PE OI-ROC","PE Volume","PE Vol-ROC","PE IV","PE IV-ROC","PE LTP","PE Positional","PE Intraday","PE Reading",
-    "Signal","Confidence %","Chartians Verdict",
+    "Signal","Confidence %","Radar Verdict",
   ].join(",");
 
   const csv = [
@@ -633,7 +633,7 @@ function exportToCsv(rows: SnapshotRow[], strike: number) {
         r.ce.iv ?? "", r.ce.ivRoc ?? "", r.ce.ltp ?? "", posOf(r.ce) ?? "", r.ce.intraday ?? "", esc(ceR),
         r.pe.oi ?? "", r.pe.oiRoc ?? "", r.pe.volume ?? "", r.pe.volumeRoc ?? "",
         r.pe.iv ?? "", r.pe.ivRoc ?? "", r.pe.ltp ?? "", posOf(r.pe) ?? "", r.pe.intraday ?? "", esc(peR),
-        esc(r.signal.kind.replaceAll("_"," ")), r.signal.confidence.toFixed(1), esc(r.chartians.verdict),
+        esc(r.signal.kind.replaceAll("_"," ")), r.signal.confidence.toFixed(1), esc(r.market.verdict),
       ].join(",");
     }),
   ].join("\n");
@@ -695,7 +695,7 @@ export function LiveChainTable({ rows, strike = 0 }: { rows: SnapshotRow[]; stri
               <th title="PE Intraday pressure ratio">P-INT</th>
               <th title="Smart money reading for Put side">PE SIGNAL</th>
               {/* Combined */}
-              <th title="Strike price + overall signal + Chartians verdict">STRIKE / VERDICT</th>
+              <th title="Strike price + overall signal + Radar verdict">STRIKE / VERDICT</th>
             </tr>
           </thead>
           <tbody>
@@ -762,7 +762,7 @@ export function LiveChainTable({ rows, strike = 0 }: { rows: SnapshotRow[]; stri
                   <td className="timeline-reading-cell" style={km}>
                     <span className="lct-strike">{row.strike}</span>
                     <strong className="lct-signal">{row.signal.kind.replaceAll("_", " ")}</strong>
-                    <small className="lct-verdict">{row.chartians.verdict}</small>
+                    <small className="lct-verdict">{row.market.verdict}</small>
                   </td>
                 </tr>
               );

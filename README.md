@@ -42,7 +42,7 @@ Combines COI/Vol, IV direction, and premium movement into one of four signals pe
 
 Each signal comes with a **confidence score (0–100%)** based on how strongly all three metrics agree.
 
-### Chartians Verdict (Activity Ratio Classification)
+### Radar Verdict (Activity Ratio Classification)
 
 Classifies each interval into one of three regimes using `AR = |COI| / volume`:
 
@@ -249,7 +249,7 @@ All tunable parameters via `.env.local`:
 │   │   ├── signalEngine.ts       # Bullish/bearish signal classification
 │   │   ├── radarEngine.ts        # Smart money activity detector
 │   │   ├── vibeEngine.ts         # IV squeeze and sentiment analysis
-│   │   ├── chartiansEngine.ts    # Activity ratio and regime verdicts
+│   │   ├── radarEngine.ts    # Activity ratio and regime verdicts
 │   │   ├── participants.ts       # FII/DII participant intelligence
 │   │   ├── legReading.ts         # Human-readable leg interpretation
 │   │   └── types.ts              # All TypeScript interfaces
