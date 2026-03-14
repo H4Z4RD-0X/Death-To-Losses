@@ -11,6 +11,8 @@ import { ParticipantSummaryTable } from "@/components/ParticipantSummaryTable";
 import { ParticipantIntelTable } from "@/components/ParticipantIntelTable";
 import { PositionTimeline } from "@/components/PositionTimeline";
 import { BrokerSettings } from "@/components/BrokerSettings";
+import { RetailTrapScorecard } from '@/components/RetailTrapScorecard';
+import { ViralShareAnalysis } from '@/components/ViralShareAnalysis';
 import { groupPositions } from "@/lib/positionTracker";
 import type { LiveApiResponse, ParticipantRecord, SegmentNetSnapshot, VibeStrikeView, ChainDisplaySnapshot } from "@/lib/types";
 
@@ -2080,6 +2082,9 @@ export default function HomePage() {
             When both sides are extreme, retail gets wiped out. <strong>Long Trap</strong> = retail bought calls, smart money is short — price will likely fall.
             <strong> Short Trap</strong> = retail bought puts, smart money is short — price will likely rise. The bars below show the mismatch.
           </p>
+          
+          <RetailTrapScorecard data={retailTrap} />
+
           {/* ── Trap Badge (Change 3) ──────────────────────────────── */}
           <div className={`trap-badge ${
             retailTrap.trapStrength === "NONE" ? "trap-none" :
@@ -2489,6 +2494,18 @@ export default function HomePage() {
           Refreshing data…
         </div>
       ) : null}
+
+      {/* ── Viral Growth & Share Analysis ────────────────────────────────── */}
+      <section className="dashboard-section" style={{ marginTop: 40, borderTop: "1px solid var(--border)", paddingTop: 40 }}>
+        <h2>🚀 Viral Growth & Share Analysis</h2>
+        <ViralShareAnalysis 
+          data={{
+            tone: premiumFlow.interpretation.replaceAll("_", " "),
+            trapStrength: retailTrap.trapStrength,
+            summary: `Smart money is currently ${premiumFlow.interpretation.includes("BULLISH") ? "bullish" : "bearish"}. ${retailTrap.trapStrength === "NONE" ? "No significant retail trap detected." : `${retailTrap.trapStrength} retail trap detected.`}`
+          }}
+        />
+      </section>
 
       {/* ── Claude chat assistant ────────────────────────────────────── */}
       <DashboardChat index="NIFTY" strike={payload?.strike ?? strike} />
